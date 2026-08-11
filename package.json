@@ -1,0 +1,93 @@
+{
+	"name": "@packkit/core",
+	"version": "0.1.0",
+	"description": "The versioned Packkit platform contract + primitives + conformance suite. Language-agnostic; browser-safe by default.",
+	"homepage": "https://github.com/PackkitJS/packkit-core#readme",
+	"bugs": {
+		"url": "https://github.com/PackkitJS/packkit-core/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/PackkitJS/packkit-core.git"
+	},
+	"license": "MIT",
+	"author": "DanMat <dannymatthew@gmail.com>",
+	"type": "module",
+	"exports": {
+		".": {
+			"import": {
+				"types": "./dist/index.d.ts",
+				"default": "./dist/index.js"
+			}
+		},
+		"./node": {
+			"import": {
+				"types": "./dist/node/index.d.ts",
+				"default": "./dist/node/index.js"
+			}
+		},
+		"./testing": {
+			"import": {
+				"types": "./dist/testing/index.d.ts",
+				"default": "./dist/testing/index.js"
+			}
+		},
+		"./package.json": "./package.json"
+	},
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"files": [
+		"dist",
+		"src"
+	],
+	"engines": {
+		"node": ">=20"
+	},
+	"scripts": {
+		"typecheck": "tsc --noEmit",
+		"build": "tsup",
+		"dev": "tsup --watch",
+		"prepublishOnly": "tsup",
+		"clean": "rimraf dist",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"coverage": "vitest run --coverage",
+		"format": "prettier --write .",
+		"format:check": "prettier --check .",
+		"lint": "eslint .",
+		"lint:fix": "eslint . --fix",
+		"prepare": "simple-git-hooks",
+		"changeset": "changeset",
+		"version": "changeset version",
+		"release": "npm run build && changeset publish",
+		"check:pkg": "publint && attw --pack --profile esm-only"
+	},
+	"simple-git-hooks": {
+		"pre-commit": "npx lint-staged"
+	},
+	"lint-staged": {
+		"*.{js,ts}": [
+			"prettier --write",
+			"eslint --fix"
+		],
+		"*.{json,md,yml}": "prettier --write"
+	},
+	"devDependencies": {
+		"@arethetypeswrong/cli": "^0.18.0",
+		"@changesets/cli": "^2.27.0",
+		"@eslint/js": "^10.0.0",
+		"@types/node": "^24.0.0",
+		"@vitest/coverage-v8": "^4.0.0",
+		"eslint": "^10.0.0",
+		"lint-staged": "^16.2.0",
+		"prettier": "^3.3.0",
+		"publint": "^0.3.0",
+		"rimraf": "^6.0.0",
+		"simple-git-hooks": "^2.11.0",
+		"tsup": "^8.0.0",
+		"typescript": "^5.9.3",
+		"typescript-eslint": "^8.0.0",
+		"vitest": "^4.0.0"
+	}
+}
