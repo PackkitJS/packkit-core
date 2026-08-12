@@ -1,5 +1,11 @@
 # @packkit/core
 
+## 0.1.3
+
+### Patch Changes
+
+- 104705d: Adopt the shared PackkitJS/packkit-actions CI: run `generator-ci@v1` via a standard `check` script and add a `security@v1` npm-audit gate. No API changes.
+
 ## [0.1.2] - 2026-08-12
 
 ### Changed
