@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Security workflow** — weekly + per-PR `npm audit` gate via the shared
+  `PackkitJS/packkit-actions` `security@v1` workflow.
+
 ### Changed
 
 - CI now runs via the shared `PackkitJS/packkit-actions` reusable workflow
