@@ -20,12 +20,15 @@ export interface ManifestDiffResult {
 	changed: Record<string, ManifestChange>;
 }
 
-export interface ManifestDiffer<Manifest = unknown> {
+export interface ManifestDiffer<Manifest = unknown, Diff = ManifestDiffResult> {
 	/** The file this differ owns, e.g. "package.json" | "pyproject.toml". */
 	readonly filename: string;
 	parse(content: string): Manifest;
 	serialize(manifest: Manifest): string;
 	/** A structural snapshot stored in the baseline for later three-way diffing. */
 	snapshot(manifest: Manifest): Record<string, unknown>;
-	diff(input: { baseline?: Record<string, unknown>; current: Manifest; generated: Manifest }): ManifestDiffResult;
+	// The diff shape is the generator's own (package.json sections vs pyproject
+	// [project]/entry-points), so it's a type parameter defaulting to the generic
+	// ManifestDiffResult. Keeps npm/pyproject concepts out of core.
+	diff(input: { baseline?: Record<string, unknown>; current: Manifest; generated: Manifest }): Diff;
 }
