@@ -1,12 +1,14 @@
 import type { Diagnostic } from './diagnostics.js';
 import type { DeploymentContract } from './contracts.js';
+import type { ManifestDiffer } from './manifest.js';
 
 // The universal generator contract. A language generator implements this; MCP,
 // web, and providers consume it and never a generator's internals.
 
 export type MaturityStatus = 'experimental' | 'preview' | 'stable' | 'deprecated';
 
-export type GeneratorCapability = 'generate' | 'project-definition' | 'baseline-upgrade' | 'deployment-contract' | 'browser';
+export type GeneratorCapability =
+	'generate' | 'project-definition' | 'baseline-upgrade' | 'deployment-contract' | 'browser';
 
 export const GENERATOR_CAPABILITIES: readonly GeneratorCapability[] = [
 	'generate',
@@ -100,4 +102,7 @@ export interface PackkitGenerator {
 	createProjectFromDefinition?(definition: ProjectDefinition): GeneratedProject;
 	exportDefinition?(project: GeneratedProject): ProjectDefinition;
 	upgradeProject?(input: unknown): unknown;
+	/** The generator's structured-manifest differs (package.json, pyproject.toml, …)
+	 *  — the per-generator seam core keeps language semantics behind. */
+	manifestDiffers?: ManifestDiffer[];
 }

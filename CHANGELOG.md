@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-08-12
+
+### Added
+
+- `PackkitGenerator.manifestDiffers?` — optional per-generator structured-manifest
+  differs (the seam core keeps language semantics behind).
+- `ManifestDiffer` gained a `Diff` type parameter (defaulting to `ManifestDiffResult`)
+  so a generator's diff can be its own shape.
+
+Both are backward-compatible (`^0.1.0` picks this up).
+
 ## [0.1.0] - 2026-08-11
 
 Initial release of the versioned Packkit platform contract (Phase 2 of the
