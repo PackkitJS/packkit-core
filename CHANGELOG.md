@@ -1,22 +1,4 @@
-# Changelog
-
-All notable changes to `@packkit/core` are documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
-## [Unreleased]
-
-### Added
-
-- **Security workflow** — weekly + per-PR `npm audit` gate via the shared
-  `PackkitJS/packkit-actions` `security@v1` workflow.
-
-### Changed
-
-- CI now runs via the shared `PackkitJS/packkit-actions` reusable workflow
-  (`generator-ci@v1`). Added a standard `check` npm script (typecheck + lint +
-  test + build + package validation) as the single language-agnostic CI entrypoint.
+# @packkit/core
 
 ## [0.1.2] - 2026-08-12
 
@@ -61,6 +43,5 @@ platform migration — see `create-packkit`'s `docs/PLATFORM.md`).
 - **Conformance suite** (`runGeneratorConformanceSuite`) — the executable
   definition of a Packkit-compatible generator.
 
-[Unreleased]: https://github.com/PackkitJS/packkit-core/compare/v0.1.2...HEAD
 [0.1.2]: https://github.com/PackkitJS/packkit-core/releases/tag/v0.1.2
 [0.1.0]: https://github.com/PackkitJS/packkit-core/releases/tag/v0.1.0
