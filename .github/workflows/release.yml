@@ -1,31 +1,41 @@
 name: Release
 
-# Publishes @packkit/core to npm via OIDC Trusted Publishing — no NPM_TOKEN.
-# One-time setup (after the package exists on npm): npmjs.com → the @packkit/core
-# package → Settings → Trusted Publisher → GitHub Actions, repo PackkitJS/packkit-core,
-# workflow "release.yml". Then bump the version in package.json and run this workflow.
+# Changesets-driven release. On every push to main:
+#   • if unreleased changesets exist → open/update a "Version Packages" PR that runs
+#     `changeset version` (bumps package.json + writes the CHANGELOG entry);
+#   • if none remain (that PR was merged) → run `changeset publish` to publish.
+#
+# Publishing uses npm OIDC Trusted Publishing — NO NPM_TOKEN, provenance automatic.
+# @packkit/core is scoped, so publishConfig.access=public (package.json) is required.
+# The publish step lives HERE, in the package's own repo (never delegated to shared
+# CI). The trusted publisher must be configured on npmjs.com for PackkitJS/packkit-core,
+# workflow file "release.yml" (unchanged filename → existing config still matches).
 on:
-  workflow_dispatch:
+  push:
+    branches: [main]
+
+concurrency: release-${{ github.ref }}
+
+permissions:
+  contents: write # open the Version Packages PR / push the version bump
+  pull-requests: write # open the Version Packages PR
+  id-token: write # OIDC trusted publishing
 
 jobs:
   release:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write # required for OIDC trusted publishing
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
-      # Trusted publishing needs npm >= 11.5.1.
-      - run: npm install -g npm@^11.5.1
+      - run: npm install -g npm@^11.5.1 # OIDC trusted publishing needs npm >= 11.5.1
       - run: npm ci
-      - run: npm run typecheck
-      - run: npm run lint
-      - run: npm run test
-      - run: npm run build
-      - run: npm run check:pkg
-      # Uses OIDC (id-token: write) — no token, and provenance is generated automatically.
-      - run: npm publish
+      # action v1.x pairs with @changesets/cli v2 (installed here); action v2 requires CLI v3.
+      - uses: changesets/action@a45c4d594aa4e2c509dc14a9f2b3b67ba3780d0d # v1.9.0
+        with:
+          version: npm run version # changeset version
+          publish: npm run release # npm run build && changeset publish (OIDC, tokenless)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
