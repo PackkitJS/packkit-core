@@ -1,6 +1,6 @@
 {
 	"name": "@packkit/core",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"description": "The versioned Packkit platform contract + primitives + conformance suite. Language-agnostic; browser-safe by default.",
 	"homepage": "https://github.com/PackkitJS/packkit-core#readme",
 	"bugs": {
