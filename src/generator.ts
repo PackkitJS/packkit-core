@@ -103,6 +103,10 @@ export interface PackkitGenerator {
 	exportDefinition?(project: GeneratedProject): ProjectDefinition;
 	upgradeProject?(input: unknown): unknown;
 	/** The generator's structured-manifest differs (package.json, pyproject.toml, …)
-	 *  — the per-generator seam core keeps language semantics behind. */
-	manifestDiffers?: ManifestDiffer[];
+	 *  — the per-generator seam core keeps language semantics behind. Each differ's
+	 *  Diff shape is its own (JS returns scripts/deps sections; Python returns
+	 *  dependencies/entry-points), so the array is left fully generic: a reader gets
+	 *  `unknown` back from `diff()` and narrows by the generator it came from. Pinning
+	 *  this to the default `ManifestDiffResult` would force every richer differ to cast. */
+	manifestDiffers?: ManifestDiffer<unknown, unknown>[];
 }

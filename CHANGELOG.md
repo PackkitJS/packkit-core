@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-08-12
+
+### Changed
+
+- `PackkitGenerator.manifestDiffers?` is now typed `ManifestDiffer<unknown, unknown>[]`
+  instead of pinning the default `ManifestDiffResult`. Each differ owns its `Diff`
+  shape (package.json sections vs pyproject entry-points), so a generator whose
+  differ returns a richer diff (e.g. create-packkit-py's `pyprojectDiffer`) no
+  longer needs an `as unknown as ManifestDiffer` cast to populate the array. A
+  reader of the array gets `unknown` from `diff()` and narrows by the source
+  generator. Backward-compatible: any existing `ManifestDiffer` is still assignable.
+
 ## [0.1.1] - 2026-08-12
 
 ### Added
@@ -38,5 +50,6 @@ platform migration — see `create-packkit`'s `docs/PLATFORM.md`).
 - **Conformance suite** (`runGeneratorConformanceSuite`) — the executable
   definition of a Packkit-compatible generator.
 
-[Unreleased]: https://github.com/PackkitJS/packkit-core/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/PackkitJS/packkit-core/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/PackkitJS/packkit-core/releases/tag/v0.1.2
 [0.1.0]: https://github.com/PackkitJS/packkit-core/releases/tag/v0.1.0
