@@ -61,7 +61,8 @@
 		"changeset": "changeset",
 		"version": "changeset version",
 		"release": "npm run build && changeset publish",
-		"check:pkg": "publint && attw --pack --profile esm-only"
+		"check:pkg": "publint && attw --pack --profile esm-only",
+		"check": "npm run typecheck && npm run lint && npm run test && npm run build && npm run check:pkg"
 	},
 	"simple-git-hooks": {
 		"pre-commit": "npx lint-staged"

@@ -5,16 +5,5 @@ on:
   pull_request:
 jobs:
   ci:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-        with:
-          node-version: '24'
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run typecheck
-      - run: npm run lint
-      - run: npm run test
-      - run: npm run build
-      - run: npm run check:pkg
+    # Shared, language-agnostic CI — runs `npm run check`. See PackkitJS/packkit-actions.
+    uses: PackkitJS/packkit-actions/.github/workflows/generator-ci.yml@v1
