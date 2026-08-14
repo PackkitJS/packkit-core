@@ -27,7 +27,7 @@ export type {
 	DeploymentType,
 	DeploymentContract,
 	StaticDeploymentContract,
-	NodeServiceDeploymentContract,
+	ServiceDeploymentContract,
 	WorkerDeploymentContract,
 	CliDeploymentContract,
 	LibraryDeploymentContract,

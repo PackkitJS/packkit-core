@@ -2,7 +2,7 @@
 // run a project in these terms; a provider decides whether it supports the
 // contract — compatibility is contract × provider, never language × provider.
 
-export type DeploymentType = 'static' | 'node-service' | 'worker' | 'library' | 'cli' | 'fullstack';
+export type DeploymentType = 'static' | 'service' | 'worker' | 'library' | 'cli' | 'fullstack';
 
 export interface StaticDeploymentContract {
 	type: 'static';
@@ -10,9 +10,13 @@ export interface StaticDeploymentContract {
 	outputDirectory: string;
 }
 
-export interface NodeServiceDeploymentContract {
-	type: 'node-service';
-	runtime: 'node';
+/** A long-running HTTP service. Liveness is an HTTP port + health-check path.
+ *  Language-neutral: `runtime` is a free string ('node', 'python-3.12', 'go-1.23',
+ *  ...) exactly like the worker contract — a provider decides support from the
+ *  contract shape, never the language. */
+export interface ServiceDeploymentContract {
+	type: 'service';
+	runtime: string;
 	buildCommand?: string;
 	startCommand: string;
 	defaultPort: number;
@@ -50,25 +54,31 @@ export interface LibraryDeploymentContract {
 export interface FullstackDeploymentContract {
 	type: 'fullstack';
 	frontend: StaticDeploymentContract;
-	backend: NodeServiceDeploymentContract;
+	backend: ServiceDeploymentContract;
 }
 
 export type DeploymentContract =
 	| StaticDeploymentContract
-	| NodeServiceDeploymentContract
+	| ServiceDeploymentContract
 	| WorkerDeploymentContract
 	| CliDeploymentContract
 	| LibraryDeploymentContract
 	| FullstackDeploymentContract;
 
 /** Deployable contracts a provider can act on; libraries/CLIs are non-deployable. */
-export const DEPLOYABLE_TYPES: readonly DeploymentType[] = ['static', 'node-service', 'worker', 'fullstack'];
+export const DEPLOYABLE_TYPES: readonly DeploymentType[] = [
+	'static',
+	'service',
+	'worker',
+	'fullstack',
+];
 
 /** Structurally validate a deployment contract. Returns the offending reasons so
  *  a generator's conformance check can report precisely. */
 export function validateDeploymentContract(contract: unknown): { ok: boolean; errors: string[] } {
 	const errors: string[] = [];
-	if (!contract || typeof contract !== 'object') return { ok: false, errors: ['contract is not an object'] };
+	if (!contract || typeof contract !== 'object')
+		return { ok: false, errors: ['contract is not an object'] };
 	const c = contract as Record<string, unknown>;
 	const req = (cond: boolean, msg: string) => {
 		if (!cond) errors.push(msg);
@@ -85,14 +95,20 @@ export function validateDeploymentContract(contract: unknown): { ok: boolean; er
 		case 'cli':
 			// buildCommand optional; nothing else required
 			break;
-		case 'node-service':
-			req(c.runtime === 'node', "node-service: runtime must be 'node'");
-			req(str(c.startCommand), 'node-service: startCommand required');
-			req(typeof c.defaultPort === 'number', 'node-service: defaultPort required');
-			req(str(c.portEnvironmentVariable), 'node-service: portEnvironmentVariable required');
-			req(str(c.healthCheckPath), 'node-service: healthCheckPath required');
-			req(strArray(c.requiredEnvironmentVariables), 'node-service: requiredEnvironmentVariables must be string[]');
-			req(strArray(c.optionalEnvironmentVariables), 'node-service: optionalEnvironmentVariables must be string[]');
+		case 'service':
+			req(str(c.runtime), 'service: runtime required');
+			req(str(c.startCommand), 'service: startCommand required');
+			req(typeof c.defaultPort === 'number', 'service: defaultPort required');
+			req(str(c.portEnvironmentVariable), 'service: portEnvironmentVariable required');
+			req(str(c.healthCheckPath), 'service: healthCheckPath required');
+			req(
+				strArray(c.requiredEnvironmentVariables),
+				'service: requiredEnvironmentVariables must be string[]',
+			);
+			req(
+				strArray(c.optionalEnvironmentVariables),
+				'service: optionalEnvironmentVariables must be string[]',
+			);
 			break;
 		case 'worker':
 			req(str(c.runtime), 'worker: runtime required');

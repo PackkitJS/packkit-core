@@ -53,22 +53,84 @@ describe('validateRelativePath', () => {
 
 describe('classifyChange', () => {
 	it('is safe to apply only for a template-only change', () => {
-		expect(classifyChange({ hasBaseline: true, currentEqualsBaseline: true, generatedEqualsBaseline: false })).toMatchObject({ status: 'template-only-change', safeToApply: true });
-		expect(classifyChange({ hasBaseline: true, currentEqualsBaseline: false, generatedEqualsBaseline: true })).toMatchObject({ status: 'user-only-change', safeToApply: false });
-		expect(classifyChange({ hasBaseline: true, currentEqualsBaseline: false, generatedEqualsBaseline: false })).toMatchObject({ status: 'both-changed', safeToApply: false });
-		expect(classifyChange({ hasBaseline: false, currentEqualsBaseline: false, generatedEqualsBaseline: false })).toMatchObject({ status: 'changed', safeToApply: false });
+		expect(
+			classifyChange({
+				hasBaseline: true,
+				currentEqualsBaseline: true,
+				generatedEqualsBaseline: false,
+			}),
+		).toMatchObject({ status: 'template-only-change', safeToApply: true });
+		expect(
+			classifyChange({
+				hasBaseline: true,
+				currentEqualsBaseline: false,
+				generatedEqualsBaseline: true,
+			}),
+		).toMatchObject({ status: 'user-only-change', safeToApply: false });
+		expect(
+			classifyChange({
+				hasBaseline: true,
+				currentEqualsBaseline: false,
+				generatedEqualsBaseline: false,
+			}),
+		).toMatchObject({ status: 'both-changed', safeToApply: false });
+		expect(
+			classifyChange({
+				hasBaseline: false,
+				currentEqualsBaseline: false,
+				generatedEqualsBaseline: false,
+			}),
+		).toMatchObject({ status: 'changed', safeToApply: false });
 	});
 });
 
 describe('validateDeploymentContract', () => {
 	it('accepts valid contracts', () => {
-		expect(validateDeploymentContract({ type: 'static', buildCommand: 'npm run build', outputDirectory: 'dist' }).ok).toBe(true);
+		expect(
+			validateDeploymentContract({
+				type: 'static',
+				buildCommand: 'npm run build',
+				outputDirectory: 'dist',
+			}).ok,
+		).toBe(true);
 		expect(validateDeploymentContract({ type: 'library' }).ok).toBe(true);
-		expect(validateDeploymentContract({ type: 'worker', runtime: 'node', startCommand: 'npm start', shutdown: { signals: ['SIGTERM'], drainsInflight: true }, health: { type: 'process' }, requiredEnvironmentVariables: [], optionalEnvironmentVariables: [] }).ok).toBe(true);
+		expect(
+			validateDeploymentContract({
+				type: 'worker',
+				runtime: 'node',
+				startCommand: 'npm start',
+				shutdown: { signals: ['SIGTERM'], drainsInflight: true },
+				health: { type: 'process' },
+				requiredEnvironmentVariables: [],
+				optionalEnvironmentVariables: [],
+			}).ok,
+		).toBe(true);
+	});
+	it("accepts a service contract for any language runtime (it's language-neutral)", () => {
+		const service = (runtime: string) => ({
+			type: 'service',
+			runtime,
+			startCommand: 'run',
+			defaultPort: 8080,
+			portEnvironmentVariable: 'PORT',
+			healthCheckPath: '/healthz',
+			requiredEnvironmentVariables: [],
+			optionalEnvironmentVariables: [],
+		});
+		for (const runtime of ['node', 'python-3.12', 'go-1.23']) {
+			expect(validateDeploymentContract(service(runtime)).ok).toBe(true);
+		}
+		// runtime is required, but not pinned to any particular language.
+		expect(validateDeploymentContract(service('')).ok).toBe(false);
 	});
 	it('rejects invalid or unknown contracts with reasons', () => {
 		expect(validateDeploymentContract({ type: 'static' }).ok).toBe(false);
-		expect(validateDeploymentContract({ type: 'nope' }).errors[0]).toMatch(/unknown deployment type/);
+		expect(validateDeploymentContract({ type: 'nope' }).errors[0]).toMatch(
+			/unknown deployment type/,
+		);
+		expect(validateDeploymentContract({ type: 'node-service' }).errors[0]).toMatch(
+			/unknown deployment type/,
+		);
 		expect(validateDeploymentContract(null).ok).toBe(false);
 	});
 });
