@@ -71,9 +71,12 @@ generator. All of these operate on the protocol shapes, never a manifest:
 
 ## Three ways to integrate
 
-- **Universal platform** — this package + `PackkitGenerator` + a generator registry.
-  Select by generator id and drive JS, Python, and future generators through one
-  lifecycle. For portals, agent hosts, and multi-language tooling.
+- **Universal platform** — this package + `PackkitGenerator` + a generator registry,
+  or the thin `createPackkit({ generators })` facade (`listGenerators` / `generate` /
+  `extend` / `digest` / `exportDefinition` / `replay` / `upgrade`, resolving the owning
+  generator from a project's own metadata). Select by generator id and drive JS,
+  Python, and future generators through one lifecycle — for portals, agent hosts, and
+  multi-language tooling.
 - **Language-specific** — a generator's own embedded API (`create-packkit/embedded`,
   the Python equivalent) when you deliberately want its richer, language-aware
   features. Still fully compatible with the universal contract.
