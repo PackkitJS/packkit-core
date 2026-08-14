@@ -50,6 +50,8 @@ export type {
 export type { ManifestDiffer, ManifestChange, ManifestDiffResult } from './manifest.js';
 export { createGeneratorRegistry } from './registry.js';
 export type { GeneratorRegistry } from './registry.js';
+export { createPackkit } from './packkit.js';
+export type { Packkit, GeneratorSummary, GenerateRequest } from './packkit.js';
 export { computeProjectUpgrade, summarizeFileUpgrade } from './upgrade.js';
 export type {
 	UpgradeFileStatus,
