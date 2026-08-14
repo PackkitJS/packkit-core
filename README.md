@@ -15,7 +15,7 @@ contract; MCP, the web configurator, and providers consume it.
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
 | `@packkit/core`         | Types, `PACKKIT_PROTOCOL_VERSION`, `contentHash`, `validateRelativePath`, `classifyChange`, deployment-contract types + `validateDeploymentContract`, `PackkitGenerator`/`ManifestDiffer` interfaces, `createGeneratorRegistry` | **browser-safe** — imports no `node:*` (asserted in CI) |
 | `@packkit/core/node`    | `writeGeneratedProject` (filesystem)                                                                                                                                                                                            | Node                                                    |
-| `@packkit/core/testing` | `runGeneratorConformanceSuite`, `generatorConformanceChecks`                                                                                                                                                                    | dev/test                                                |
+| `@packkit/core/testing` | `runGeneratorConformanceSuite`, `runEmbeddedLifecycleConformance`, and their check lists                                                                                                                                        | dev/test                                                |
 
 ## The protocol
 
