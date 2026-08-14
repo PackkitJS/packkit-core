@@ -38,7 +38,7 @@
 
 ### Patch Changes
 
-- 104705d: Adopt the shared PackkitJS/packkit-actions CI: run `generator-ci@v1` via a standard `check` script and add a `security@v1` npm-audit gate. No API changes.
+- 104705d: Adopt the shared PackkitLabs/packkit-actions CI: run `generator-ci@v1` via a standard `check` script and add a `security@v1` npm-audit gate. No API changes.
 
 ## [0.1.2] - 2026-08-12
 
@@ -83,5 +83,5 @@ platform migration — see `create-packkit`'s `docs/PLATFORM.md`).
 - **Conformance suite** (`runGeneratorConformanceSuite`) — the executable
   definition of a Packkit-compatible generator.
 
-[0.1.2]: https://github.com/PackkitJS/packkit-core/releases/tag/v0.1.2
-[0.1.0]: https://github.com/PackkitJS/packkit-core/releases/tag/v0.1.0
+[0.1.2]: https://github.com/PackkitLabs/packkit-core/releases/tag/v0.1.2
+[0.1.0]: https://github.com/PackkitLabs/packkit-core/releases/tag/v0.1.0

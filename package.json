@@ -2,13 +2,13 @@
 	"name": "@packkit/core",
 	"version": "0.4.0",
 	"description": "The versioned Packkit platform contract + primitives + conformance suite. Language-agnostic; browser-safe by default.",
-	"homepage": "https://github.com/PackkitJS/packkit-core#readme",
+	"homepage": "https://github.com/PackkitLabs/packkit-core#readme",
 	"bugs": {
-		"url": "https://github.com/PackkitJS/packkit-core/issues"
+		"url": "https://github.com/PackkitLabs/packkit-core/issues"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/PackkitJS/packkit-core.git"
+		"url": "git+https://github.com/PackkitLabs/packkit-core.git"
 	},
 	"license": "MIT",
 	"author": "DanMat <dannymatthew@gmail.com>",

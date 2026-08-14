@@ -1,8 +1,8 @@
 # @packkit/core 📦
 
-> The versioned [Packkit](https://github.com/PackkitJS) platform contract — primitives, protocol, and an executable conformance suite. Language-agnostic; **browser-safe by default**.
+> The versioned [Packkit](https://github.com/PackkitLabs) platform contract — primitives, protocol, and an executable conformance suite. Language-agnostic; **browser-safe by default**.
 
-[![npm](https://img.shields.io/npm/v/@packkit/core.svg)](https://www.npmjs.com/package/@packkit/core) [![CI](https://github.com/PackkitJS/packkit-core/actions/workflows/ci.yml/badge.svg)](https://github.com/PackkitJS/packkit-core/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![npm](https://img.shields.io/npm/v/@packkit/core.svg)](https://www.npmjs.com/package/@packkit/core) [![CI](https://github.com/PackkitLabs/packkit-core/actions/workflows/ci.yml/badge.svg)](https://github.com/PackkitLabs/packkit-core/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 `packkit-core` owns the **universal Packkit protocol** and nothing language-specific.
 It knows nothing about npm, `package.json`, `pyproject.toml`, frameworks, or provider

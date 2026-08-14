@@ -1,12 +1,12 @@
 {
-	"$schema": "https://packkitjs.github.io/create-packkit-js/packkit.schema.json",
+	"$schema": "https://packkitlabs.github.io/create-packkit-js/packkit.schema.json",
 	"generator": "create-packkit",
 	"version": "3.3.3",
 	"preset": "ts-lib",
 	"settings": {
 		"description": "The versioned Packkit platform contract + primitives + conformance suite. Language-agnostic; browser-safe by default.",
 		"author": "DanMat <dannymatthew@gmail.com>",
-		"repo": "https://github.com/PackkitJS/packkit-core",
+		"repo": "https://github.com/PackkitLabs/packkit-core",
 		"pkgChecks": true,
 		"workflows": ["ci"]
 	},

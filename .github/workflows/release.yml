@@ -8,7 +8,7 @@ name: Release
 # Publishing uses npm OIDC Trusted Publishing — NO NPM_TOKEN, provenance automatic.
 # @packkit/core is scoped, so publishConfig.access=public (package.json) is required.
 # The publish step lives HERE, in the package's own repo (never delegated to shared
-# CI). The trusted publisher must be configured on npmjs.com for PackkitJS/packkit-core,
+# CI). The trusted publisher must be configured on npmjs.com for PackkitLabs/packkit-core,
 # workflow file "release.yml" (unchanged filename → existing config still matches).
 on:
   push:
