@@ -1,6 +1,7 @@
 import type { Diagnostic } from './diagnostics.js';
 import type { DeploymentContract } from './contracts.js';
 import type { ManifestDiffer } from './manifest.js';
+import type { AppliedExtension } from './extend.js';
 
 // The universal generator contract. A language generator implements this; MCP,
 // web, and providers consume it and never a generator's internals.
@@ -67,10 +68,19 @@ export interface GeneratedProject {
 	diagnostics: Diagnostic[];
 	metadata: GeneratedProjectMetadata;
 	deploymentContract: DeploymentContract;
+	/** Host-layered files (add/replace) accumulated via extendGeneratedProject.
+	 *  Present only after extension; a generator's exportDefinition persists it so
+	 *  replay re-applies the same intent. */
+	extensions?: AppliedExtension;
 }
 
-/** A reproducible description of a project: replaying it regenerates the same
- *  output. Carries both the definition schema version and the protocol version. */
+/** The canonical, protocol-native project definition: replaying it regenerates
+ *  the same output. Carries the definition schema version, the protocol version,
+ *  and the owning generator's identity/version. `config` is opaque to core (the
+ *  owning generator validates it). `extensions` preserves host-layered files with
+ *  their add/replace intent; `baseline` is the scaffold-time snapshot for
+ *  baseline-aware upgrades. Both are optional so a generator advertises only what
+ *  it supports. */
 export interface ProjectDefinition {
 	schemaVersion: number;
 	protocolVersion: number;
@@ -78,6 +88,7 @@ export interface ProjectDefinition {
 	preset?: string;
 	config: Record<string, unknown>;
 	extensions?: unknown;
+	baseline?: unknown;
 }
 
 /** A scaffold-time snapshot for baseline-aware upgrades: a hash per file plus a

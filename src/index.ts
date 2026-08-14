@@ -7,16 +7,22 @@
 export { PACKKIT_PROTOCOL_VERSION } from './protocol.js';
 export { PackkitCoreError } from './errors.js';
 export { contentHash } from './hash.js';
+export { calculateGeneratedProjectDigest } from './digest.js';
 export { toJson } from './render.js';
 export { validateRelativePath, validatePathMap } from './paths.js';
 export type { PathValidation } from './paths.js';
 export type { Diagnostic, DiagnosticSeverity } from './diagnostics.js';
 export { classifyChange } from './diff.js';
 export type { ChangeStatus, ChangeClassification } from './diff.js';
-export {
-	validateDeploymentContract,
-	DEPLOYABLE_TYPES,
-} from './contracts.js';
+export { extendGeneratedProject } from './extend.js';
+export type {
+	ExtensionMode,
+	FileExtension,
+	GeneratedProjectExtension,
+	AppliedExtension,
+	ExtendResult,
+} from './extend.js';
+export { validateDeploymentContract, DEPLOYABLE_TYPES } from './contracts.js';
 export type {
 	DeploymentType,
 	DeploymentContract,
@@ -44,3 +50,11 @@ export type {
 export type { ManifestDiffer, ManifestChange, ManifestDiffResult } from './manifest.js';
 export { createGeneratorRegistry } from './registry.js';
 export type { GeneratorRegistry } from './registry.js';
+export { computeProjectUpgrade, summarizeFileUpgrade } from './upgrade.js';
+export type {
+	UpgradeFileStatus,
+	UpgradeFileChange,
+	FileUpgradePlan,
+	UpgradeMetadata,
+	UpgradeResult,
+} from './upgrade.js';
