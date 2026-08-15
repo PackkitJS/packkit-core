@@ -36,6 +36,14 @@ export type {
 	FullstackDeploymentContract,
 } from './contracts.js';
 export { GENERATOR_CAPABILITIES } from './generator.js';
+export { PROVIDER_CAPABILITIES } from './provider.js';
+export type {
+	PackkitProvider,
+	ProviderCapability,
+	ProviderPlan,
+	ProviderSupportResult,
+	ProviderSupportReason,
+} from './provider.js';
 export type {
 	PackkitGenerator,
 	GeneratorProtocol,
