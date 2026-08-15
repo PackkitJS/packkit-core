@@ -35,6 +35,8 @@ export type {
 	LibraryDeploymentContract,
 	FullstackDeploymentContract,
 } from './contracts.js';
+export { GENERATOR_CHECKLIST, GENERATOR_CHECKLIST_IDS } from './checklist.js';
+export type { GeneratorChecklistItem, ChecklistCategory, ChecklistScope } from './checklist.js';
 export { GENERATOR_CAPABILITIES } from './generator.js';
 export { PROVIDER_CAPABILITIES } from './provider.js';
 export type {
