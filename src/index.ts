@@ -15,6 +15,8 @@ export type { Diagnostic, DiagnosticSeverity } from './diagnostics.js';
 export { classifyChange } from './diff.js';
 export type { ChangeStatus, ChangeClassification } from './diff.js';
 export { extendGeneratedProject } from './extend.js';
+export { composeFullstack } from './compose.js';
+export type { ComposeFullstackOptions, ComposeFullstackResult } from './compose.js';
 export type {
 	ExtensionMode,
 	FileExtension,
